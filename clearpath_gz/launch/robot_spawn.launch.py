@@ -49,8 +49,12 @@ ARGUMENTS = [
     DeclareLaunchArgument('world', default_value='warehouse',
                           description='Gazebo World'),
     DeclareLaunchArgument('setup_path',
-                          default_value=[EnvironmentVariable('HOME'), '/clearpath/'],
-                          description='Clearpath setup path')
+                          #default_value=[EnvironmentVariable('HOME'), '/clearpath/'],
+                          default_value=[EnvironmentVariable('HOME'), '/clearpath_simulator_harmonic/robot_yamls/'],
+                          description='Clearpath setup path'),
+    DeclareLaunchArgument('robot_config_yaml',
+                          default_value='robot.yaml',
+                          description='Default name of a robot`s configuration file name')
 ]
 
 for pose_element in ['x', 'y', 'yaw']:
