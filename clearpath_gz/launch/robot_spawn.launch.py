@@ -51,7 +51,7 @@ ARGUMENTS = [
                           description='Gazebo World'),
     DeclareLaunchArgument('setup_path',
                           #default_value=[EnvironmentVariable('HOME'), '/clearpath/'],
-                          default_value=[EnvironmentVariable('HOME'), '/clearpath_simulator_harmonic/robot_yamls/'],
+                          default_value=[EnvironmentVariable('HOME'), '/clearpath_simulator_harmonic_ws/robot_yamls/'],
                           description='Clearpath setup path'),
     DeclareLaunchArgument('robot_config_yaml',
                           default_value='robot.yaml',
@@ -78,7 +78,7 @@ def launch_setup(context, *args, **kwargs):
     # clearpath_config = ClearpathConfig(os.path.join(
     #     str(setup_path.perform(context)), 'robot.yaml'))
     clearpath_config = ClearpathConfig(os.path.join(
-        str(setup_path.perform(context)), robot_yaml_file))
+        str(setup_path.perform(context)), robot_yaml_file.perform(context)))
 
     namespace = clearpath_config.system.namespace
     if namespace in ('', '/'):

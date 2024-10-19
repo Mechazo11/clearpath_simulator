@@ -34,7 +34,7 @@ ARGUMENTS = [
     DeclareLaunchArgument('world', default_value='warehouse',
                           description='Gazebo World'),
     DeclareLaunchArgument('setup_path',
-                          default_value=[EnvironmentVariable('HOME'), '/clearpath_simulator_harmonic/robot_yamls/'],
+                          default_value=[EnvironmentVariable('HOME'), '/clearpath_simulator_harmonic_ws/robot_yamls/'],
                           description='Path to YAML files for the robots'),
     DeclareLaunchArgument('use_sim_time', default_value='true',
                           choices=['true', 'false'],
