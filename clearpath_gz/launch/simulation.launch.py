@@ -1,20 +1,24 @@
-# Copyright 2023 Clearpath Robotics, Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-# @author Roni Kreinin (rkreinin@clearpathrobotics.com)
-# Modified by
-# @author Azmyin Md. Kamal (azmyin12@gmail.com)
+"""
+Top-level launch file to start a Clearpath robot simulation in Gazebo Harmonic
+
+Copyright 2023 Clearpath Robotics, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+@author Roni Kreinin (rkreinin@clearpathrobotics.com)
+Modified by
+@author Azmyin Md. Kamal (azmyin12@gmail.com)
+"""
 
 # Imports
 from ament_index_python.packages import get_package_share_directory
@@ -53,7 +57,7 @@ def generate_launch_description():
     pkg_clearpath_gz = get_package_share_directory(
         'clearpath_gz')
 
-    # Paths
+    # Join paths to additional launch files to spawn world and robot
     gz_sim_launch = PathJoinSubstitution(
         [pkg_clearpath_gz, 'launch', 'gz_sim.launch.py'])
     robot_spawn_launch = PathJoinSubstitution(
