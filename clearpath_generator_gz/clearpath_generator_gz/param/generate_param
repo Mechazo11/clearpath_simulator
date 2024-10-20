@@ -32,12 +32,17 @@
 # modification, is not permitted without the express permission
 # of Clearpath Robotics.
 
+# Imports
 from clearpath_generator_common.common import BaseGenerator
 from clearpath_generator_gz.param.generator import GzParamGenerator
 
-
 def main():
     setup_path = BaseGenerator.get_args()
+    
+    print()
+    print(f"Setup path in generate_param: {setup_path}")
+    print()
+    
     gpg = GzParamGenerator(setup_path)
     gpg.generate()
 
