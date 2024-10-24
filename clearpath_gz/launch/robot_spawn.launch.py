@@ -131,7 +131,7 @@ def launch_setup(context, *args, **kwargs):
         executable='generate_description',
         name='generate_description',
         output='screen',
-        arguments=['-s', setup_path]
+        arguments=['-s', setup_path, '-r', robot_yaml_file]
     )
 
     node_generate_semantic_description = Node(
@@ -139,7 +139,7 @@ def launch_setup(context, *args, **kwargs):
         executable='generate_semantic_description',
         name='generate_semantic_description',
         output='screen',
-        arguments=['-s', setup_path]
+        arguments=['-s', setup_path, '-r', robot_yaml_file]
     )
 
     node_generate_launch = Node(
@@ -147,7 +147,7 @@ def launch_setup(context, *args, **kwargs):
         executable='generate_launch',
         name='generate_launch',
         output='screen',
-        arguments=['-s', setup_path]
+        arguments=['-s', setup_path, '-r', robot_yaml_file]
     )
 
     node_generate_param = Node(
@@ -155,7 +155,7 @@ def launch_setup(context, *args, **kwargs):
         executable='generate_param',
         name='generate_launch',
         output='screen',
-        arguments=['-s', setup_path]
+        arguments=['-s', setup_path, '-r', robot_yaml_file]
     )
 
     event_generate_description = RegisterEventHandler(
