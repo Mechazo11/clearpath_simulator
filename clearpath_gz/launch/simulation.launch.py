@@ -121,6 +121,6 @@ def generate_launch_description():
     ld = LaunchDescription(ARGUMENTS) 
     # ld.add_action(log_action) # To print debug message
     ld.add_action(teleop_twist_joy_spawn)
-    #ld.add_action(gz_sim)
-    #ld.add_action(robot_spawn)
+    ld.add_action(gz_sim)
+    ld.add_action(robot_spawn)
     return ld
