@@ -44,7 +44,7 @@ ARGUMENTS = [
                           description='Default name of a robot`s configuration file name'),
     DeclareLaunchArgument('joy_config', default_value='xbox',
                           description='Joystick configuration to use'),
-    DeclareLaunchArgument('joy_dev', default_value='0',
+    DeclareLaunchArgument('joy_dev', default_value='2',
                           description='Joystick device'),
     DeclareLaunchArgument('publish_stamped_twist', default_value='false',
                           description='Publish geometry_msgs/TwistStamped instead of geometry_msgs/Twist'),
@@ -68,6 +68,7 @@ def generate_launch_description():
     # Join paths to additional launch files to spawn world and robot
     gz_sim_launch = PathJoinSubstitution(
         [pkg_clearpath_gz, 'launch', 'gz_sim.launch.py'])
+    
     robot_spawn_launch = PathJoinSubstitution(
         [pkg_clearpath_gz, 'launch', 'robot_spawn.launch.py'])
 
@@ -111,7 +112,7 @@ def generate_launch_description():
 
     # Create launch description and add actions
     ld = LaunchDescription(ARGUMENTS)
-    ld.add_action(teleop_twist_joy_spawn)
+    # ld.add_action(teleop_twist_joy_spawn) # [Optionally introduced for debugging]
     ld.add_action(gz_sim)
-    ld.add_action(robot_spawn)
+    ld.add_action(robot_spawn) # Here in robot_yaml / <robot_name_dir>/ all the pertinent config files and sub launch files are generated
     return ld
