@@ -31,7 +31,7 @@ from launch.substitutions import EnvironmentVariable, LaunchConfiguration, PathJ
 ARGUMENTS = [
     DeclareLaunchArgument('rviz', default_value='false',
                           choices=['true', 'false'], description='Start rviz.'),
-    DeclareLaunchArgument('world', default_value='warehouse',
+    DeclareLaunchArgument('world', default_value='warehouse_cpr',
                           description='Gazebo World'),
     DeclareLaunchArgument('setup_path',
                           default_value=[EnvironmentVariable('HOME'), '/clearpath_simulator_harmonic_ws/robot_yamls/'],
