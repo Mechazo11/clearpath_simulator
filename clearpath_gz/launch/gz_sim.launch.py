@@ -74,6 +74,7 @@ def generate_launch_description():
         'ros_gz_sim')
     # Determine all ros packages that needs to be sourced
     packages_paths = [os.path.join(p, 'share') for p in os.getenv('AMENT_PREFIX_PATH').split(':')]
+    
     # Set Gazebo resource path to include all sourced ros packages
     # GZ_SIM_RESOURCE_PATH must point to the world folder, models folder etc. 
     gz_sim_resource_path = SetEnvironmentVariable(
@@ -88,13 +89,13 @@ def generate_launch_description():
     gui_config = PathJoinSubstitution(
         [pkg_clearpath_gz, 'config', 'gui.config'])
 
-    # Gazebo Simulator
+    # Bring up Gazebo world with gui configurations
     gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([gz_sim_launch]),
         launch_arguments=[
             ('gz_args', [LaunchConfiguration('world'),
                          '.sdf',
-                         ' -v 4',
+                         ' -r -v 4',
                          ' --gui-config ',
                          gui_config])
         ]
