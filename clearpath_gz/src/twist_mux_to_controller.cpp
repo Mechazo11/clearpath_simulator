@@ -21,9 +21,6 @@
 #include <rclcpp/rclcpp.hpp>
 #include <geometry_msgs/msg/twist.hpp>
 #include <geometry_msgs/msg/twist_stamped.hpp>
-#include <rclcpp/rclcpp.hpp>
-#include <rclcpp_components/register_node_macro.hpp>
-#include <sensor_msgs/msg/joy.hpp>
 
 class TwistMuxToPlatfromController : public rclcpp::Node
 {
@@ -34,7 +31,7 @@ public:
      * @param options 
      */
     TwistMuxToPlatfromController(const rclcpp::NodeOptions &options)
-        : Node("twist_to_twist_stamped_node", options)
+        : Node("twistmuxtocontroller_node", options)
     {
         // Declare and get parameters
         this->declare_parameter<std::string>("input_joy_topic", "not_given");
@@ -48,27 +45,48 @@ public:
 
         
         // Subscriber: Listen for output from Twist mux server
-        subscriber_ = this->create_subscription<geometry_msgs::msg::TwistStamped>(output_controller_topic_, rclcpp::QoS(10), 
-                                        std::bind(&TwistMuxToPlatfromController::sub_callback, this, std::placeholders::_1));
-        
+        subscriber_ = this->create_subscription<geometry_msgs::msg::Twist>(
+            input_twistmux_topic_,
+            rclcpp::QoS(10),
+            std::bind(&TwistMuxToPlatfromController::sub_callback, this, std::placeholders::_1));
+                
         // Publisher: Send TwistStamped message to controller i.e. DiffDrive/Ackermann
-        publisher_ = this->create_publisher<geometry_msgs::msg::TwistStamped>(output_topic_, 10);
+        stamped_publisher_ = this->create_publisher<geometry_msgs::msg::TwistStamped>(output_controller_topic_, 10);
 
         // Debug messages
-        RCLCPP_INFO(this->get_logger(), "TwistMuxToPlatfromController Listening on topic: %s", input_topic_.c_str());
-        RCLCPP_INFO(this->get_logger(), "TwistMuxToPlatfromController Publishing on topic: %s", output_topic_.c_str());
+        RCLCPP_INFO(this->get_logger(), "TwistMuxToPlatfromController Listening on topic: %s", input_twistmux_topic_.c_str());
+        RCLCPP_INFO(this->get_logger(), "TwistMuxToPlatfromController Publishing on topic: %s", output_controller_topic_.c_str());
         
     }
 
-    void TwistMuxToPlatfromController::sub_callback(const geometry_msgs::msg::TwistStamped::SharedPtr& twist_msg)
+    /**
+     * @brief Callback to process a Twist message
+     * Based on: https://github.com/ros2/teleop_twist_joy/blob/rolling/src/teleop_twist_joy.cpp
+     * @param twist_msg 
+     */
+    void sub_callback(const geometry_msgs::msg::Twist& twist_msg)
     {
-        std::cout <<"FOO"<<std::endl;
+        std::string frame_id_ = "base_link"; // HARDCODED
+        // Create a TwistStamped message
+        auto twist_stamped_msg = std::make_unique<geometry_msgs::msg::TwistStamped>();
+        twist_stamped_msg->header.stamp = this->get_clock()->now();  // Current time
+        twist_stamped_msg->header.frame_id = frame_id_;  // Use the frame ID from your class or set explicitly
+        // Manually populate the linear field
+        twist_stamped_msg->twist.linear.x = twist_msg.linear.x;
+        twist_stamped_msg->twist.linear.y = twist_msg.linear.y;
+        twist_stamped_msg->twist.linear.z = twist_msg.linear.z;
+
+        // Manually populate the angular field
+        twist_stamped_msg->twist.angular.x = twist_msg.angular.x;
+        twist_stamped_msg->twist.angular.y = twist_msg.angular.y;
+        twist_stamped_msg->twist.angular.z = twist_msg.angular.z;
+        stamped_publisher_->publish(std::move(twist_stamped_msg)); // Publish the TwistStamped message
     }
 
 private:
     std::string input_twistmux_topic_;
     std::string output_controller_topic_;
-    rclcpp::Publisher<geometry_msgs::msg::TwistStamped>::SharedPtr publisher_;
+    rclcpp::Publisher<geometry_msgs::msg::TwistStamped>::SharedPtr stamped_publisher_;
     rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr subscriber_;
 };
 
