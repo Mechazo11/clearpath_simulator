@@ -88,6 +88,7 @@ def launch_setup(context, *args, **kwargs):
 
     # Directories
     pkg_clearpath_viz = FindPackageShare('clearpath_viz')
+    pkg_clearpath_gz = FindPackageShare('clearpath_gz')
 
     # Paths
     rviz_launch = PathJoinSubstitution(
