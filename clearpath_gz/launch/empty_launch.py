@@ -83,10 +83,6 @@ def generate_launch_description():
         ]
     )
 
-    # Construct full path to the teleop-launch.py file located in teleop_twist_joy package
-    teleop_twist_joy_launch = PathJoinSubstitution(
-        [get_package_share_directory('teleop_twist_joy'), 'launch', 'teleop-launch.py'])
-
     robot_spawn = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([robot_spawn_launch]),
         launch_arguments=[
@@ -101,35 +97,9 @@ def generate_launch_description():
             ('yaw', LaunchConfiguration('yaw'))]
     )
 
-    # !HARDCODED, only works for HUSKY robot
-    # TODO move this to teleop_joy.launch.py file where the platform's name is accessible
-    twist_to_twist_stamped = Node(
-        package='clearpath_gz', 
-        executable='twistmusk_to_controller_node', 
-        name='twiststamped_to_controller',
-        parameters=[
-            {'input_joy_topic': '/a200_0000/platform/cmd_vel_unstamped'},
-            {'controller_cmd_vel': '/a200_0000/platform_velocity_controller/cmd_vel'},
-        ]
-    )
-    
-    # ROS 2 resolves dynamic launch during runtime. Hence only in this part, we can resolve the full path to `xbox.config.yml` file
-    # joy_config_yaml_string = PathJoinSubstitution([get_package_share_directory('clearpath_gz'), 'config', LaunchConfiguration('config_with_yaml')])
-    
-    # teleop_twist_joy_spawner = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource([teleop_twist_joy_launch]),
-    #     launch_arguments=[
-    #         ('joy_config', LaunchConfiguration('joy_config')),
-    #         ('joy_dev', LaunchConfiguration('joy_dev')),
-    #         ('publish_stamped_twist', LaunchConfiguration('publish_stamped_twist')),
-    #         ('config_filepath', joy_config_yaml_string)
-    #     ],
-    # )
-
     # Create launch description and add actions
     ld = LaunchDescription(ARGUMENTS)
     #ld.add_action(node_joy_spawner)
     ld.add_action(gz_sim)
     ld.add_action(robot_spawn) # Here in robot_yaml / <robot_name_dir>/ all the pertinent config files and sub launch files are generated
-    ld.add_action(twist_to_twist_stamped) # Only after spawing robot
     return ld

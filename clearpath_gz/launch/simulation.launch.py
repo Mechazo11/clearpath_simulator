@@ -29,6 +29,7 @@ from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import EnvironmentVariable, LaunchConfiguration, PathJoinSubstitution, TextSubstitution
+from launch_ros.actions import Node
 
 
 # Declare launch arguments
@@ -103,24 +104,23 @@ def generate_launch_description():
     )
 
     # ROS 2 resolves dynamic launch during runtime. Hence only in this part, we can resolve the full path to `xbox.config.yml` file
-    joy_config_yaml_string = PathJoinSubstitution([get_package_share_directory('teleop_twist_joy'), 'config', LaunchConfiguration('config_with_yaml')])
+    #joy_config_yaml_string = PathJoinSubstitution([get_package_share_directory('teleop_twist_joy'), 'config', LaunchConfiguration('config_with_yaml')])
     
     # Use LogInfo to print the resolved path
-    log_action = LogInfo(msg=joy_config_yaml_string)
 
-    teleop_twist_joy_spawn = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([teleop_twist_joy_launch]),
-        launch_arguments=[
-            ('joy_config', LaunchConfiguration('joy_config')),
-            ('joy_dev', LaunchConfiguration('joy_dev')),
-            ('publish_stamped_twist', LaunchConfiguration('publish_stamped_twist')),
-            ('config_filepath', joy_config_yaml_string)
+    twist_to_twist_stamped = Node(
+        package='clearpath_gz', 
+        executable='twistmusk_to_controller_node', 
+        name='twiststamped_to_controller',
+        parameters=[
+            {'input_joy_topic': '/a200_0000/platform/cmd_vel_unstamped'},
+            {'controller_cmd_vel': '/a200_0000/platform_velocity_controller/cmd_vel'},
         ]
     )
     # Create launch description and add actions
     ld = LaunchDescription(ARGUMENTS) 
     # ld.add_action(log_action) # To print debug message
-    ld.add_action(teleop_twist_joy_spawn)
     ld.add_action(gz_sim)
     ld.add_action(robot_spawn)
+    # ld.add_action(twist_to_twist_stamped)
     return ld

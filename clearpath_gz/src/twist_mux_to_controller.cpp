@@ -66,7 +66,7 @@ public:
      */
     void sub_callback(const geometry_msgs::msg::Twist& twist_msg)
     {
-        std::string frame_id_ = "base_link"; // HARDCODED
+        std::string frame_id_ = "base_link";
         // Create a TwistStamped message
         auto twist_stamped_msg = std::make_unique<geometry_msgs::msg::TwistStamped>();
         twist_stamped_msg->header.stamp = this->get_clock()->now();  // Current time
