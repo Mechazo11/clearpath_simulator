@@ -49,6 +49,8 @@ ARGUMENTS = [
                           description='use_sim_time'),
     DeclareLaunchArgument('world', default_value='warehouse',
                           description='Gazebo World'),
+    
+    # TODO for each robot, we will append another folder name
     DeclareLaunchArgument('setup_path',
                           #default_value=[EnvironmentVariable('HOME'), '/clearpath/'],
                           default_value=[EnvironmentVariable('HOME'), '/clearpath_simulator_harmonic_ws/robot_yamls/'],
@@ -135,6 +137,7 @@ def launch_setup(context, *args, **kwargs):
         arguments=['-s', setup_path, '-r', robot_yaml_file]
     )
 
+    # Generates the robot.srdf file that holds semantic description of the robot.
     node_generate_semantic_description = Node(
         package='clearpath_generator_common',
         executable='generate_semantic_description',
