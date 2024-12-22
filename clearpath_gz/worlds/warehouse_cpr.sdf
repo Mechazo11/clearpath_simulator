@@ -58,13 +58,13 @@
     </spherical_coordinates>
 
     <!-- TODO(rkreinin): Fix lighting so that spawning multiple robots does not crash the sim-->
-    <!-- <light type="directional" name="sun">
+    <light type="directional" name="sun">
       <cast_shadows>0</cast_shadows>
       <pose>-5 -3 10 0 0 0</pose>
       <diffuse>1 1 1 1</diffuse>
       <specular>1 1 1 1</specular>
       <direction>0 0 -1</direction>
-    </light> -->
+    </light>
   
   <!-- Define ground_plane object -->
     <model name='ground_plane'>

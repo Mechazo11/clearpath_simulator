@@ -38,49 +38,6 @@
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
 
-    <!-- <gz:policies>
-      <include_gui_default_plugins>true</include_gui_default_plugins>
-    </gz:policies>
-    
-    <gui fullscreen="0">
-      <plugin filename="MinimalScene" name="3D View">
-        <gz-gui>
-          <title>3D View</title>
-          <property type="bool" key="showTitleBar">false</property>
-          <property type="string" key="state">docked</property>
-        </gz-gui>
-        <engine>ogre2</engine>
-        <scene>scene</scene>
-        <ambient_light>0.4 0.4 0.4</ambient_light>
-        <background_color>0.8 0.8 0.8</background_color>
-        <camera_pose>-3 0 3 0 0.5 0</camera_pose>
-      </plugin>
-
-      <plugin filename="ImageDisplay" name="Image Display 3">
-        <gz-gui>
-          <title>RGBD: image</title>
-          <property key="state" type="string">floating</property>
-          <property type="double" key="width">350</property>
-          <property type="double" key="height">315</property>
-          <property type="double" key="y">320</property>
-        </gz-gui>
-        <topic>rgbd_camera/image</topic>
-        <topic_picker>false</topic_picker>
-      </plugin>
-        <plugin filename="ImageDisplay" name="Image Display 3">
-          <gz-gui>
-            <title>RGBD: depth</title>
-            <property key="state" type="string">floating</property>
-            <property type="double" key="width">350</property>
-            <property type="double" key="height">315</property>
-            <property type="double" key="x">500</property>
-            <property type="double" key="y">320</property>
-          </gz-gui>
-          <topic>rgbd_camera/depth_image</topic>
-          <topic_picker>false</topic_picker>
-      </plugin>
-    </gui> -->
-
     <!-- Lighthing -->
     <!--light-->
     <light type="directional" name="sun">
