@@ -29,6 +29,8 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import EnvironmentVariable, LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 
+package_name = "clearpath_simulator_harmonic"
+
 # Declare launch arguments
 ARGUMENTS = [
     DeclareLaunchArgument('rviz', default_value='false',
@@ -36,7 +38,7 @@ ARGUMENTS = [
     DeclareLaunchArgument('world', default_value='empty_world_cpr',
                           description='empty gazebo world'),
     DeclareLaunchArgument('setup_path',
-                          default_value=[EnvironmentVariable('HOME'), '/clearpath_simulator_harmonic_ws/robot_yamls/'],
+                          default_value=[EnvironmentVariable('HOME'), '/' ,f'{package_name}/robot_yamls/'],
                           description='Path to YAML files for the robots'),
     DeclareLaunchArgument('use_sim_time', default_value='true',
                           choices=['true', 'false'],

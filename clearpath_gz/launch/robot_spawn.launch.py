@@ -39,6 +39,8 @@ from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 import os
 
+package_name = "clearpath_simulator_harmonic"
+
 # Declare arguments
 ARGUMENTS = [
     DeclareLaunchArgument('rviz', default_value='false',
@@ -49,16 +51,21 @@ ARGUMENTS = [
                           description='use_sim_time'),
     DeclareLaunchArgument('world', default_value='warehouse',
                           description='Gazebo World'),
+    # DeclareLaunchArgument(
+    #     'package_name',
+    #     default_value='clearpath_simulator_harmonic',
+    #     description='Name of the package'
+    # ),
     
     # TODO for each robot, we will append another folder name
     DeclareLaunchArgument('setup_path',
                           #default_value=[EnvironmentVariable('HOME'), '/clearpath/'],
-                          default_value=[EnvironmentVariable('HOME'), '/clearpath_simulator_harmonic/robot_yamls/'],
+                          default_value=[EnvironmentVariable('HOME'), '/' ,f'{package_name}/robot_yamls/'],
                           description='Clearpath setup path'),
     DeclareLaunchArgument('robot_config_yaml',
                           default_value='robot.yaml',
                           description='Default name of a robot`s configuration file name')
-]
+    ]
 
 for pose_element in ['x', 'y', 'yaw']:
     ARGUMENTS.append(DeclareLaunchArgument(pose_element, default_value='0.0',
