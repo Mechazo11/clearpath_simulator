@@ -53,7 +53,7 @@ ARGUMENTS = [
     # TODO for each robot, we will append another folder name
     DeclareLaunchArgument('setup_path',
                           #default_value=[EnvironmentVariable('HOME'), '/clearpath/'],
-                          default_value=[EnvironmentVariable('HOME'), '/clearpath_simulator_harmonic_ws/robot_yamls/'],
+                          default_value=[EnvironmentVariable('HOME'), '/clearpath_simulator_harmonic/robot_yamls/'],
                           description='Clearpath setup path'),
     DeclareLaunchArgument('robot_config_yaml',
                           default_value='robot.yaml',
