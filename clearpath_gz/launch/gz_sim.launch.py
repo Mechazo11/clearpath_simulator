@@ -75,6 +75,12 @@ def generate_launch_description():
     # Determine all ros packages that needs to be sourced
     packages_paths = [os.path.join(p, 'share') for p in os.getenv('AMENT_PREFIX_PATH').split(':')]
     
+    # Set Gazebo version
+    gz_version = SetEnvironmentVariable(
+    name='GZ_VERSION',
+    value=['harmonic']
+    )
+
     # Set Gazebo resource path to include all sourced ros packages
     # GZ_SIM_RESOURCE_PATH must point to the world folder, models folder etc. 
     gz_sim_resource_path = SetEnvironmentVariable(
